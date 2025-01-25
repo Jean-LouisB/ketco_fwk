@@ -1,6 +1,6 @@
-import os
-from dotenv import load_dotenv
-load_dotenv()
+#import os
+#from dotenv import load_dotenv
+#load_dotenv()
 DEBUG = True
 SERVER_NAME = 'localhost:3000'
 

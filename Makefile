@@ -44,7 +44,7 @@ run-dev:
 .PHONY: run-prod
 run-prod:
 	@echo "Lancement de l'application en mode production avec Gunicorn..."
-	. $(VENV_DIR)/bin/activate && gunicorn -c $(GUNICORN_CONFIG) app:app
+	gunicorn -c $(GUNICORN_CONFIG) app:app
 
 # Mise à jour des dépendances (génère requirements.txt)
 .PHONY: freeze
