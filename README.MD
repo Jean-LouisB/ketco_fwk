@@ -1,23 +1,23 @@
 # ketCo fwk
 ***V.1.0.0***
 
-KetCo fwk est un Framwork pour un serveur flask avec gunicorn.
+KetCo fwk est un Framwork pour une application flask.
 
 ___
 
 ## Start
 
-Pour commencer lancer le script setup.sh
+Pour commencer, il faut exécuter le script setup.sh
 
     ./setup.sh
 
 - crée l'environnement Python,
 - l'active, 
 - installe les dépendances initiales
-- freeze les dépendances
+- freeze les dépendances,
 - Crée le dossiers des logs gunicorn
 - Crée le .env
-- Supprime le lien avec le repo git
+- Supprime le lien avec le repo git initial.
 
 
 ## dépendances
@@ -27,18 +27,16 @@ Pour commencer lancer le script setup.sh
 - mysqlclient
 - python-dotenv
 
-En options (à décomenter dans /dep/requirement_usr.txt avant installation)
+En options (à décommenter dans **/dep/requirement_usr.txt** avant installation)
 - Flask-Mail
 - pymongo
 
-### requierments: 
+### requirements: 
 Dans le dossier **/dep** il y a trois fichiers :
-- requirements_std.txt **NE LE MODIFIER PAS !**
+- requirements_std.txt **NE LE MODIFIEZ PAS !**
 - requirements_usr.txt pour vos dépendances personnelles
 - requirement.txt contient le freeze du projet.
 
-Le premier contient les dépendances initiales **NE PAS LE MODIFIER !**\
-Le second contient le freeze de votre projet.\
 Pour ajouter vos propres dépendances :  
 
     pip install <ma_librairie>
@@ -49,6 +47,8 @@ ou,
 ajouter la librairie à **requirements_usr.txt**.
 
 ## Makefile
+
+Ensemble de commandes du projet:
 
     make setup        - Lance les commandes venv, install et freeze
     make venv         - Crée l'environnement virtuel
@@ -63,7 +63,7 @@ ajouter la librairie à **requirements_usr.txt**.
     make clean-all    - Supprime tout sauf le fichier requirements
     make update-dep   - update les dépendances
 
-## Dossiers
+## Configuration des dossiers
 
     .
     ├── .github/
