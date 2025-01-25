@@ -7,7 +7,11 @@ ___
 
 ## Start
 
-Pour commencer, il faut exécuter le script setup.sh en le définissant comme source.
+Clôner le dépôt :
+
+    git clone https://github.com/Jean-LouisB/ketco_fwk.git
+
+Puis, il faut exécuter le script setup.sh en le définissant comme source.
 
     source setup.sh
 
