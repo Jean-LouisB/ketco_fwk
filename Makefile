@@ -2,6 +2,7 @@
 PYTHON = python3
 VENV_DIR = venv
 REQUIREMENTS_STD = ./dep/requirements_std.txt
+REQUIREMENTS_USR = ./dep/requirements_usr.txt
 REQUIREMENTS = ./dep/requirements.txt
 APP = app.py
 GUNICORN_CONFIG = ./config/gunicorn_config.py
@@ -22,18 +23,16 @@ venv:
 .PHONY: install
 install: venv
 	@echo "Activation et installation des dépendances..."
-	. $(VENV_DIR)/bin/activate && pip install -r $(REQUIREMENTS)
+	. $(VENV_DIR)/bin/activate && pip install -r $(REQUIREMENTS_STD) && pip install -r $(REQUIREMENTS_USR)
+	make freeze
 
 # Activation de l'environnement virtuel et installation des dépendances initiales
-.PHONY: reset-dep
+.PHONY: update-dep
 reset-dep:
 	@echo "Reset et installation des dépendances initiales..."
 	make clean-venv
 	truncate -s 0 $(REQUIREMENTS)
 	make install
-	. $(VENV_DIR)/bin/activate && pip install -r $(REQUIREMENTS_STD)
-	make freeze
-
 
 # Lancer l'application en mode développement avec Flask
 .PHONY: run-dev
@@ -99,4 +98,4 @@ help:
 	@echo "  make clean-logs   - vide les logs"
 	@echo "  make clean-venv   - Supprime l'environnement venv"
 	@echo "  make clean-all    - Supprime tout sauf le fichier requirements"
-	@echo "  make reset-dep    - réinitialise les dépendances"
+	@echo "  make update-dep   - update les dépendances"
