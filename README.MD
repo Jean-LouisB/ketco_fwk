@@ -20,10 +20,13 @@ Pour commencer lancer le script setup.sh
 ## dépendances
 ### Initiales : 
 - Flask
-- Flask-Mail
 - gunicorn
 - mysqlclient
 - python-dotenv
+
+En options (à décomenter dans /dep/requirement_usr.txt avant installation)
+- Flask-Mail
+- pymongo
 
 ### requierments: 
 Dans le dossier **/dep** il y a trois fichiers :
