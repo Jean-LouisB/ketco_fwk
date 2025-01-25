@@ -19,4 +19,6 @@ touch ./logs_gunicorn/error.log
 
 rm -rf .git
 
-echo "Initialisation terminée. Activez l'environnement avec : source venv/bin/activate"
+echo "Initialisation terminée." 
+echo "démarrer avec :"
+echo "make run-dev ou make run-prod"
