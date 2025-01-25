@@ -1,7 +1,7 @@
-# ketko fwk
+# ketCo fwk
 ***V.1.0.0***
 
-Framwork pour un serveur flask avec gunicorn.
+KetCo fwk est un Framwork pour un serveur flask avec gunicorn.
 
 ___
 
@@ -11,7 +11,7 @@ Pour commencer lancer le script setup.sh
 
     ./setup.sh
 
-- crée l'environnement python,
+- crée l'environnement Python,
 - l'active, 
 - installe les dépendances initiales
 - freeze les dépendances
