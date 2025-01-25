@@ -98,13 +98,15 @@ clean-all:
 .PHONY: clean-all-req
 clean-all-req:
 	@echo "Nettoyage ..."
-	make clean-all
 	make clean
 	make clean-logs
+	make clean-dep
 	make clean-venv
+
+.PHONY: clean-dep
+clean-dep:
+	@echo "Supprime le freeze"
 	truncate -s 0 ./dep/requirements.txt
-
-
 
 # Aide (affiche toutes les commandes disponibles)
 .PHONY: help
