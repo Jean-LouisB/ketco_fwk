@@ -82,6 +82,7 @@ clean-all:
 	make clean
 	make clean-logs
 	make clean-venv
+	truncate -s 0 ./dep/requirements.txt
 
 # Aide (affiche toutes les commandes disponibles)
 .PHONY: help

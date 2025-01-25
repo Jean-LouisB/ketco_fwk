@@ -7,6 +7,9 @@ source venv/bin/activate
 
 echo "Installation des dépendances..."
 pip install -r ./dep/requirements_std.txt
-pip freeze > ./requirements.txt
+pip install -r ./dep/requirements_usr.txt
+pip freeze > ./dep/requirements.txt
+
+touch .env
 
 echo "Initialisation terminée. Activez l'environnement avec : source venv/bin/activate"
