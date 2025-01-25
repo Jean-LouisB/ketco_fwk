@@ -3,3 +3,4 @@ Flask-Mail
 gunicorn
 mysqlclient
 python-dotenv
+pytest

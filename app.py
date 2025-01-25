@@ -15,6 +15,9 @@ def not_found(e):
 
     return redirect(url_for('doc'))
 
+@app.route('/home', methods=['GET'])
+def home():
+    return "home", 200
 
 @app.route('/doc', methods=['GET'])
 def doc():
