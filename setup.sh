@@ -11,5 +11,7 @@ pip install -r ./dep/requirements_usr.txt
 pip freeze > ./dep/requirements.txt
 
 touch .env
+mkdir tests
+touch /tests/__init__.py
 
 echo "Initialisation terminée. Activez l'environnement avec : source venv/bin/activate"
