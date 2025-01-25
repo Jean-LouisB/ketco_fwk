@@ -1,6 +1,6 @@
 # Variables
 PYTHON = python3
-VENV_DIR = venv
+VENV_DIR = ./venv
 REQUIREMENTS_STD = ./dep/requirements_std.txt
 REQUIREMENTS_USR = ./dep/requirements_usr.txt
 REQUIREMENTS = ./dep/requirements.txt
@@ -84,7 +84,7 @@ clean-logs:
 clean-venv:
 	@echo "Suppression de l'environnement..."
 	deactivate
-	rm -rf __pycache__ $(VENV_DIR)
+	rm -rf $(VENV_DIR)
 
 # Supprime les fichiers temporaires, vide les logs et supprime l'environnement.
 .PHONY: clean-all
