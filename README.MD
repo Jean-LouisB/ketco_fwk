@@ -17,6 +17,7 @@ Pour commencer lancer le script setup.sh
 - freeze les dépendances
 - Crée le dossiers des logs gunicorn
 - Crée le .env
+- Supprime le lien avec le repo git
 
 
 ## dépendances
