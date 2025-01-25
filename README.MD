@@ -7,9 +7,9 @@ ___
 
 ## Start
 
-Pour commencer, il faut exécuter le script setup.sh
+Pour commencer, il faut exécuter le script setup.sh en le définissant comme source.
 
-    ./setup.sh
+    source setup.sh
 
 - crée l'environnement Python,
 - l'active, 
