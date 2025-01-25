@@ -13,12 +13,12 @@ app.config.from_pyfile('config/flask_config.py')
 @app.errorhandler(404)
 def not_found(e):
 
-    return redirect(url_for('home'))
+    return redirect(url_for('doc'))
 
 
-@app.route('/home', methods=['GET'])
-def home():
-    return render_template(template_name_or_list='index.html')
+@app.route('/doc', methods=['GET'])
+def doc():
+    return render_template(template_name_or_list='doc.html')
 
 # @app.route('/send-mail')
 # def send_mail():

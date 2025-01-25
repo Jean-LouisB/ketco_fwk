@@ -50,18 +50,42 @@ ajouter la librairie à **requirements_usr.txt**.
 
 Ensemble de commandes du projet:
 
-    make setup        - Lance les commandes venv, install et freeze
-    make venv         - Crée l'environnement virtuel
-    make install      - Installe les dépendances
-    make run-dev      - Lance l'application en mode développement
-    make run-prod     - Lance l'application en mode production
-    make freeze       - Met à jour requirements.txt
-    make test         - Lance les tests
-    make clean        - Supprime les fichiers temporaires
-    make clean-logs   - vide les logs
-    make clean-venv   - Supprime l'environnement venv
-    make clean-all    - Supprime tout sauf le fichier requirements
-    make update-dep   - update les dépendances
+    make setup           - Lance les commandes venv, install et freeze
+    make venv            - Crée l'environnement virtuel
+    make install         - Installe les dépendances std & usr v: latest
+    make install-freeze  - Installe les dépendances depuis le freeze
+    make run-dev         - Lance l'application en mode développement
+    make run-prod        - Lance l'application en mode production
+    make freeze          - Met à jour requirements.txt
+    make test            - Lance les tests
+    make clean           - Supprime les fichiers temporaires
+    make clean-logs      - vide les logs
+    make clean-venv      - Supprime l'environnement venv
+    make clean-all       - Supprime tout sauf le fichier requirements
+    make clean-all-req   - Supprime tout y compris le fichier requirements
+    make update-dep      - update les dépendances
+
+Si vous supprimez tout sauf les requirements **make clean-all**:\
+Pour réinstaller vos dépendances dans leur version d'origine : 
+
+    make install-freeze    
+
+Pour les réinstaller et mettre à jour :
+
+    make update-dep
+
+## Créer des routes (et des blueprint)
+
+coming soon...
+
+## Envoyer des mails
+
+coming soon...
+
+## Les logs
+
+coming soon...
+
 
 ## Configuration des dossiers
 

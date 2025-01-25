@@ -17,10 +17,11 @@
     <main>
         <section id="start">
             <h2>🚀 Démarrage</h2>
-            <p>clône du dépôt :</p>
+            <p>Faire le clône du dépôt :</p>
             <pre><code>git clone https://github.com/Jean-LouisB/ketco_fwk.git</code></pre>
-            <p>Pour commencer, il faut exécuter le script <code>setup.sh</code> en le définissant comme source :</p>
+            <p>Une fois chargé, il faut exécuter le script <code>setup.sh</code> en le définissant comme source :</p>
             <pre><code>source setup.sh</code></pre>
+            <p>Ce script : </p>
             <ul>
                 <li>Crée l'environnement Python,</li>
                 <li>L'active,</li>
@@ -64,7 +65,8 @@ make freeze</code></pre>
             <ul>
                 <li><code>make setup</code> - Lance les commandes venv, install et freeze.</li>
                 <li><code>make venv</code> - Crée l'environnement virtuel.</li>
-                <li><code>make install</code> - Installe les dépendances.</li>
+                <li><code>make install</code> - Installe les dépendances std & usr v: latest</li>
+                <li><code>make install-freeze</code> - Installe les dépendances depuis le freeze</li>
                 <li><code>make run-dev</code> - Lance l'application en mode développement.</li>
                 <li><code>make run-prod</code> - Lance l'application en mode production.</li>
                 <li><code>make freeze</code> - Met à jour <code>requirements.txt</code>.</li>
@@ -73,10 +75,37 @@ make freeze</code></pre>
                 <li><code>make clean-logs</code> - Vide les logs.</li>
                 <li><code>make clean-venv</code> - Supprime l'environnement virtuel.</li>
                 <li><code>make clean-all</code> - Supprime tout sauf le fichier requirements.</li>
+                <li><code>make clean-all-req</code> - Supprime tout y compris le fichier requirements.</li>
                 <li><code>make update-dep</code> - Met à jour les dépendances.</li>
             </ul>
         </section>
+        <section>
+            <h2>Lancer l'app :</h2>
+            <p>Une fois tout installé le framwork est prêt à démarrer.</p>
+            <p>faites :</p>
+            <pre><code>make run-dev</code></pre>
+            <p>ou</p>
+            <pre><code>make run-prod</code></pre>
+            <p>Une page doc.html est disponible à l'adresse <pre><code>http://localhost:3000/doc</code></pre></p>
+            <p>Vous pouvez la modifier ou en creer d'autres</p>
+        </section>
+        <section>
+            <h2>Créer des routes (et des blueprint)</h2>
+            <p>coming soon...</p>
 
+        </section>
+        <section>
+            <h2>Envoyer des mails</h2>
+            <p>coming soon...</p>
+            
+        </section>
+        <section>
+            <h2>Les logs</h2>
+            <p>coming soon...</p>
+            
+        </section>
+
+        
         <section id="folders">
             <h2>📂 Configuration des dossiers</h2>
             <pre><code>
@@ -117,6 +146,5 @@ make freeze</code></pre>
         <p>© 2025 KetCo Framework</p>
     </footer>
 
-    <script src="script.js"></script>
 </body>
 </html>

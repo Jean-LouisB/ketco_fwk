@@ -26,6 +26,13 @@ install: venv
 	. $(VENV_DIR)/bin/activate && pip install -r $(REQUIREMENTS_STD) && pip install -r $(REQUIREMENTS_USR)
 	make freeze
 
+# Activation de l'environnement virtuel et installation des dépendances depuis le freeze
+.PHONY: install-freeze
+install-freeze: venv
+	@echo "Activation et installation des dépendances..."
+	. $(VENV_DIR)/bin/activate && pip install -r $(REQUIREMENTS)
+
+
 # Activation de l'environnement virtuel et installation des dépendances initiales
 .PHONY: update-dep
 reset-dep:
@@ -46,10 +53,10 @@ run-prod:
 	@echo "Lancement de l'application en mode production avec Gunicorn..."
 	gunicorn -c $(GUNICORN_CONFIG) app:app
 
-# Mise à jour des dépendances (génère requirements.txt)
+# Fais le freeze des dépendances (dans requirements.txt)
 .PHONY: freeze
 freeze:
-	@echo "Mise à jour de requirements.txt..."
+	@echo "freeze dans requirements.txt..."
 	. $(VENV_DIR)/bin/activate && pip freeze > $(REQUIREMENTS)
 
 # Lancer les tests (exemple avec pytest)
@@ -68,35 +75,52 @@ clean:
 # netoie les logs
 .PHONY: clean-logs
 clean-logs:
+	@echo "Nettoyage des fichiers de log..."
 	truncate -s 0 ./logs_gunicorn/access.log
 	truncate -s 0 ./logs_gunicorn/error.log
 
+# Supprime l'environnement
 .PHONY: clean-venv
 clean-venv:
-	@echo "Nettoyage des fichiers temporaires..."
+	@echo "Suppression de l'environnement..."
+	deactivate
 	rm -rf __pycache__ $(VENV_DIR)
 
+# Supprime les fichiers temporaires, vide les logs et supprime l'environnement.
 .PHONY: clean-all
 clean-all:
 	@echo "Nettoyage ..."
 	make clean
 	make clean-logs
 	make clean-venv
+
+# Supprime les fichiers temporaires, vide les logs et supprime l'environnement ET le freeze.
+.PHONY: clean-all-req
+clean-all-req:
+	@echo "Nettoyage ..."
+	make clean-all
+	make clean
+	make clean-logs
+	make clean-venv
 	truncate -s 0 ./dep/requirements.txt
+
+
 
 # Aide (affiche toutes les commandes disponibles)
 .PHONY: help
 help:
 	@echo "Commandes disponibles :"
-	@echo "  make setup        - Lance les commandes venv, install et freeze"
-	@echo "  make venv         - Crée l'environnement virtuel"
-	@echo "  make install      - Installe les dépendances"
-	@echo "  make run-dev      - Lance l'application en mode développement"
-	@echo "  make run-prod     - Lance l'application en mode production"
-	@echo "  make freeze       - Met à jour requirements.txt"
-	@echo "  make test         - Lance les tests"
-	@echo "  make clean        - Supprime les fichiers temporaires"
-	@echo "  make clean-logs   - vide les logs"
-	@echo "  make clean-venv   - Supprime l'environnement venv"
-	@echo "  make clean-all    - Supprime tout sauf le fichier requirements"
-	@echo "  make update-dep   - update les dépendances"
+	@echo "  make setup        	  - Lance les commandes venv, install et freeze"
+	@echo "  make venv         	  - Crée l'environnement virtuel"
+	@echo "  make install      	  - Installe les dépendances std & usr v: latest"
+	@echo "  make install-freeze  - Installe les dépendances depuis le freeze"
+	@echo "  make run-dev      	  - Lance l'application en mode développement"
+	@echo "  make run-prod     	  - Lance l'application en mode production"
+	@echo "  make freeze       	  - Met à jour requirements.txt"
+	@echo "  make test         	  - Lance les tests"
+	@echo "  make clean        	  - Supprime les fichiers temporaires"
+	@echo "  make clean-logs   	  - vide les logs"
+	@echo "  make clean-venv   	  - Supprime l'environnement venv"
+	@echo "  make clean-all    	  - Supprime tout sauf le fichier requirements"
+	@echo "  make clean-all-req	  - Supprime tout y compris le fichier requirements"
+	@echo "  make update-dep   	  - update les dépendances"
