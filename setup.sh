@@ -15,6 +15,6 @@ mkdir tests
 touch ./tests/__init__.py
 mkdir logs_gunicorn
 touch ./logs_gunicorn/access.log
-touch ./logs_gunicorn/erreur.log
-rm -rf .git
+touch ./logs_gunicorn/error.log
+#rm -rf .git
 echo "Initialisation terminée. Activez l'environnement avec : source venv/bin/activate"

@@ -1,20 +1,24 @@
-from flask import Flask, request, redirect, url_for
-from flask_mail import Mail, Message
+from config.flask_config import template_folder, static_folder
+from flask import Flask, request, redirect, url_for, render_template
+#from flask_mail import Mail, Message
 
-app = Flask(__name__)
-app.config.from_pyfile('./config/flask_config.py')
+app = Flask(__name__, 
+            template_folder=template_folder,
+            static_folder=static_folder
+            )
+app.config.from_pyfile('config/flask_config.py')
 #mail = Mail(app)
 
 
 @app.errorhandler(404)
 def not_found(e):
+
     return redirect(url_for('home'))
 
 
 @app.route('/home', methods=['GET'])
 def home():
-    deb=4
-    return "flask is running"
+    return render_template(template_name_or_list='index.html')
 
 # @app.route('/send-mail')
 # def send_mail():

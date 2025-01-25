@@ -9,3 +9,4 @@ errorlog = "./logs_gunicorn/error.log"  # Logs d'erreur (affichés dans la conso
 loglevel = "info"  # Niveau de log : debug, info, warning, error, critical
 reload = True  # Recharger automatiquement lors de modifications (utile en dev)
 
+

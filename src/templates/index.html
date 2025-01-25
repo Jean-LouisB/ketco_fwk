@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ketCo fwk Documentation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</head>
+<body>
+    <header>
+        <h1>ketCo fwk</h1>
+        <p><strong>Version :</strong> V.1.0.0</p>
+        <p>KetCo fwk est un Framework pour une application Flask.</p>
+    </header>
+
+    <main>
+        <section id="start">
+            <h2>🚀 Démarrage</h2>
+            <p>Pour commencer, il faut exécuter le script <code>setup.sh</code> en le définissant comme source :</p>
+            <pre><code>source setup.sh</code></pre>
+            <ul>
+                <li>Crée l'environnement Python,</li>
+                <li>L'active,</li>
+                <li>Installe les dépendances initiales,</li>
+                <li>Freeze les dépendances,</li>
+                <li>Crée les dossiers des logs Gunicorn,</li>
+                <li>Crée le fichier <code>.env</code>,</li>
+                <li>Supprime le lien avec le repo Git initial.</li>
+            </ul>
+        </section>
+
+        <section id="dependencies">
+            <h2>📦 Dépendances</h2>
+            <h3>Initiales :</h3>
+            <ul>
+                <li>Flask</li>
+                <li>Gunicorn</li>
+                <li>mysqlclient</li>
+                <li>python-dotenv</li>
+            </ul>
+            <h3>Options :</h3>
+            <p>(À décommenter dans <code>/dep/requirements_usr.txt</code> avant installation)</p>
+            <ul>
+                <li>Flask-Mail</li>
+                <li>pymongo</li>
+            </ul>
+            <h3>Fichiers des dépendances :</h3>
+            <ul>
+                <li><strong>requirements_std.txt :</strong> Ne pas modifier.</li>
+                <li><strong>requirements_usr.txt :</strong> Pour vos dépendances personnelles.</li>
+                <li><strong>requirements.txt :</strong> Contient le freeze du projet.</li>
+            </ul>
+            <p>Pour ajouter vos dépendances personnelles :</p>
+            <pre><code>pip install &lt;ma_librairie&gt;  
+make freeze</code></pre>
+        </section>
+
+        <section id="makefile">
+            <h2>🛠️ Makefile</h2>
+            <p>Voici l'ensemble des commandes disponibles :</p>
+            <ul>
+                <li><code>make setup</code> - Lance les commandes venv, install et freeze.</li>
+                <li><code>make venv</code> - Crée l'environnement virtuel.</li>
+                <li><code>make install</code> - Installe les dépendances.</li>
+                <li><code>make run-dev</code> - Lance l'application en mode développement.</li>
+                <li><code>make run-prod</code> - Lance l'application en mode production.</li>
+                <li><code>make freeze</code> - Met à jour <code>requirements.txt</code>.</li>
+                <li><code>make test</code> - Lance les tests.</li>
+                <li><code>make clean</code> - Supprime les fichiers temporaires.</li>
+                <li><code>make clean-logs</code> - Vide les logs.</li>
+                <li><code>make clean-venv</code> - Supprime l'environnement virtuel.</li>
+                <li><code>make clean-all</code> - Supprime tout sauf le fichier requirements.</li>
+                <li><code>make update-dep</code> - Met à jour les dépendances.</li>
+            </ul>
+        </section>
+
+        <section id="folders">
+            <h2>📂 Configuration des dossiers</h2>
+            <pre><code>
+.
+├── .github/
+│   └── workflow/
+│       └── build.yml          # Pipeline GitHub Actions
+├── config/
+│   ├── flask_config.py        # Configuration Flask
+│   ├── gunicorn_config.py     # Configuration Gunicorn
+├── dep/
+│   ├── requirements_std.txt   # Dépendances standard
+│   ├── requirements_usr.txt   # Dépendances utilisateur
+│   └── requirements.txt       # Dépendances consolidées
+├── logs_gunicorn/
+│   ├── access.log             # Logs d'accès
+│   └── error.log              # Logs d'erreur
+├── src/
+│   ├── controllers/           # Contrôleurs
+│   ├── models/                # Modèles
+│   ├── routes/                # Routes Flask
+│   ├── statics/               # Fichiers statiques
+│   ├── templates/             # Templates HTML
+│   └── tools/                 # Outils
+├── tests/
+│   └── __init__.py            # Tests initiaux
+├── .env                       # Variables d'environnement
+├── .gitignore                 # Fichiers à ignorer par Git
+├── app.py                     # Point d'entrée Flask
+├── Makefile                   # Automatisation des tâches
+├── README.md                  # Documentation du projet
+└── setup.sh                   # Script d'installation
+            </code></pre>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 KetCo Framework</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

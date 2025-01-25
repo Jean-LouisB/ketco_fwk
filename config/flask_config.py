@@ -4,6 +4,8 @@ load_dotenv()
 DEBUG = True
 SERVER_NAME = 'localhost:3000'
 
+template_folder="src/templates"  # Chemin vers le dossier des templates
+static_folder="src/static"       # Chemin vers le dossier des fichiers statiques
 
 # Configuration du serveur de messagerie :
 # activer Flask-Mail dans /dep/requirements_usr.txt avant.
