@@ -15,6 +15,8 @@ Pour commencer lancer le script setup.sh
 - l'active, 
 - installe les dépendances initiales
 - freeze les dépendances
+- Crée le dossiers des logs gunicorn
+- Crée le .env
 
 
 ## dépendances
