@@ -52,35 +52,82 @@ ajouter la librairie à **requirements_usr.txt**.
 
 ## Makefile
 
-Ensemble de commandes du projet:
+Le Makefile permet d’automatiser les tâches courantes du projet. Voici les commandes disponibles :
 
-    make setup           - Lance les commandes venv, install et freeze
-    make venv            - Crée l'environnement virtuel
-    make install         - Installe les dépendances std & usr v: latest
-    make install-freeze  - Installe les dépendances depuis le freeze
-    make run-dev         - Lance l'application en mode développement
-    make run-prod        - Lance l'application en mode production
-    make freeze          - Met à jour requirements.txt
-    make test            - Lance les tests
-    make clean           - Supprime les fichiers temporaires
-    make clean-logs      - vide les logs
-    make clean-venv      - Supprime l'environnement venv
-    make clean-all       - Supprime tout sauf le fichier requirements
-    make clean-all-req   - Supprime tout y compris le fichier requirements
-    make update-dep      - update les dépendances
+### Commandes principales
+**Configuration et installation :**
+	•	make venv : Crée l’environnement virtuel Python.
+	•	make install : Installe les dépendances standard et utilisateur.
+	•	make install-freeze : Installe les dépendances depuis le fichier freeze requirements.txt.
 
-Si vous supprimez tout sauf les requirements **make clean-all**:\
-Pour réinstaller vos dépendances dans leur version d'origine : 
+**Exécution de l’application :**
+	•	make run-dev : Lance l’application en mode développement.
+	•	make run-prod : Lance l’application en mode production avec Gunicorn.
 
-    make install-freeze    
+**Dépendances :**
+	•	make freeze : Met à jour le fichier requirements.txt en freezant les dépendances installées.
 
-Pour les réinstaller et mettre à jour :
+**Commandes de nettoyage :**
+	•	make clean : Supprime les fichiers temporaires (cache Python, etc.).
+	•	make clean-logs : Vide les logs dans le dossier logs_gunicorn.
+	•	make clean-all : Supprime tous les fichiers temporaires, y compris le venv, mais conserve le fichier requirements.txt.
 
-    make update-dep
+**Tests :**
+	•	make test : Exécute les tests avec pytest.
 
-## Créer des routes (et des blueprint)
+**Utilisation recommandée :**
 
-coming soon...
+Pour réinitialiser le projet avec les dépendances initiales :
+
+    make clean-all
+    make install-freeze
+
+Pour ajouter une dépendance et la freezer :
+
+    pip install <ma_librairie>
+    make freeze
+
+Pour exécuter l’application en développement ou en production :
+
+    make run-dev
+    make run-prod
+
+## Créer des routes (et des blueprints)
+
+### Étape 1 : Créer un fichier pour votre blueprint
+
+Dans le dossier `src/routes/`, créez un fichier pour le blueprint, par exemple : `example_routes.py`.
+
+    from flask import Blueprint, jsonify
+
+    example = Blueprint('example', __name__)
+
+    @example.route('/example', methods=['GET'])
+    def example_route():
+        return jsonify({"message": "Ceci est un exemple de route!"})
+
+### Étape 2 : Enregistrer le blueprint dans l’application
+Dans le fichier app.py, enregistrez le blueprint :
+
+    from flask import Flask
+    from src/routes.example_routes import example
+
+    app = Flask(__name__)
+
+    # Enregistrement du blueprint
+    app.register_blueprint(example, url_prefix='/api')
+
+Avec cette configuration, la route sera accessible à l’adresse suivante :
+http://localhost:3000/api/example.
+
+
+### Étape 3 : Ajouter des routes supplémentaires
+
+Pour ajouter d’autres routes dans le même fichier, utilisez simplement le décorateur @example.route avec le chemin et les méthodes souhaités.
+
+    @example.route('/hello/<name>', methods=['GET'])
+    def hello(name):
+        return jsonify({"message": f"Bonjour, {name}!"})
 
 ## Envoyer des mails
 

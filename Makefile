@@ -7,12 +7,11 @@ REQUIREMENTS = ./dep/requirements.txt
 APP = app.py
 GUNICORN_CONFIG = ./config/gunicorn_config.py
 
-.PHONY: setup
-setup:
-	make venv
-	make install
-	make freeze
 
+
+#--------------------------------------------------------------
+#---------------------- INSTALLATION --------------------------
+#--------------------------------------------------------------
 # Création de l'environnement virtuel
 .PHONY: venv
 venv:
@@ -23,47 +22,57 @@ venv:
 .PHONY: install
 install: venv
 	@echo "Activation et installation des dépendances..."
-	. $(VENV_DIR)/bin/activate && pip install -r $(REQUIREMENTS_STD) && pip install -r $(REQUIREMENTS_USR)
+	$(VENV_DIR)/bin/pip install -r $(REQUIREMENTS_STD)
+	$(VENV_DIR)/bin/pip install -r $(REQUIREMENTS_USR)
 	make freeze
 
 # Activation de l'environnement virtuel et installation des dépendances depuis le freeze
 .PHONY: install-freeze
 install-freeze: venv
 	@echo "Activation et installation des dépendances..."
-	. $(VENV_DIR)/bin/activate && pip install -r $(REQUIREMENTS)
+	$(VENV_DIR)/bin/pip install -r $(REQUIREMENTS)
+
+# Fais le freeze des dépendances (dans requirements.txt)
+.PHONY: freeze
+freeze: venv
+	@echo "freeze dans requirements.txt..."
+	$(VENV_DIR)/bin/pip freeze > $(REQUIREMENTS)
+
+.Phony: uninstall
+uninstall: venv
+	@echo "suppression des dépendances..."
+	$(VENV_DIR)/bin/pip uninstall -r $(REQUIREMENTS) -y
+	truncate -s 0 ./dep/requirements.txt
 
 
-# Activation de l'environnement virtuel et installation des dépendances initiales
-.PHONY: update-dep
-reset-dep:
-	@echo "Reset et installation des dépendances initiales..."
-	make clean-venv
-	truncate -s 0 $(REQUIREMENTS)
-	make install
-
+#--------------------------------------------------------------
+#------------------------- RUNS -------------------------------
+#--------------------------------------------------------------
 # Lancer l'application en mode développement avec Flask
 .PHONY: run-dev
 run-dev:
 	@echo "Lancement de l'application en mode développement..."
-	. $(VENV_DIR)/bin/activate && $(PYTHON) $(APP)
+	$(VENV_DIR)/bin/python $(APP)
 
 # Lancer l'application en production avec Gunicorn
 .PHONY: run-prod
 run-prod:
 	@echo "Lancement de l'application en mode production avec Gunicorn..."
-	gunicorn -c $(GUNICORN_CONFIG) app:app
+	$(VENV_DIR)/bin/gunicorn -c $(GUNICORN_CONFIG) app:app
 
-# Fais le freeze des dépendances (dans requirements.txt)
-.PHONY: freeze
-freeze:
-	@echo "freeze dans requirements.txt..."
-	. $(VENV_DIR)/bin/activate && pip freeze > $(REQUIREMENTS)
+#--------------------------------------------------------------
+#------------------------- TESTS ------------------------------
+#--------------------------------------------------------------
 
 # Lancer les tests (exemple avec pytest)
 .PHONY: test
-test:
+test: venv
 	@echo "Lancement des tests..."
-	. $(VENV_DIR)/bin/activate && pytest tests
+	$(VENV_DIR)/bin/pytest tests
+
+#--------------------------------------------------------------
+#------------------------- CLEAN ------------------------------
+#--------------------------------------------------------------
 
 # Nettoyer les fichiers temporaires et cache
 .PHONY: clean
@@ -74,55 +83,36 @@ clean:
 
 # netoie les logs
 .PHONY: clean-logs
-clean-logs:
+clean-logs: 
 	@echo "Nettoyage des fichiers de log..."
 	truncate -s 0 ./logs_gunicorn/access.log
 	truncate -s 0 ./logs_gunicorn/error.log
 
-# Supprime l'environnement
-.PHONY: clean-venv
-clean-venv:
-	@echo "Suppression de l'environnement..."
-	deactivate
-	rm -rf $(VENV_DIR)
 
-# Supprime les fichiers temporaires, vide les logs et supprime l'environnement.
+# Supprime les fichiers temporaires, vide les logs.
 .PHONY: clean-all
 clean-all:
 	@echo "Nettoyage ..."
 	make clean
 	make clean-logs
-	make clean-venv
 
-# Supprime les fichiers temporaires, vide les logs et supprime l'environnement ET le freeze.
-.PHONY: clean-all-req
-clean-all-req:
-	@echo "Nettoyage ..."
-	make clean
-	make clean-logs
-	make clean-dep
-	make clean-venv
 
-.PHONY: clean-dep
-clean-dep:
-	@echo "Supprime le freeze"
-	truncate -s 0 ./dep/requirements.txt
+#--------------------------------------------------------------
+#------------------------- HELP -------------------------------
+#--------------------------------------------------------------
 
 # Aide (affiche toutes les commandes disponibles)
 .PHONY: help
 help:
 	@echo "Commandes disponibles :"
-	@echo "  make setup        	  - Lance les commandes venv, install et freeze"
-	@echo "  make venv         	  - Crée l'environnement virtuel"
-	@echo "  make install      	  - Installe les dépendances std & usr v: latest"
-	@echo "  make install-freeze  - Installe les dépendances depuis le freeze"
-	@echo "  make run-dev      	  - Lance l'application en mode développement"
-	@echo "  make run-prod     	  - Lance l'application en mode production"
-	@echo "  make freeze       	  - Met à jour requirements.txt"
-	@echo "  make test         	  - Lance les tests"
-	@echo "  make clean        	  - Supprime les fichiers temporaires"
-	@echo "  make clean-logs   	  - vide les logs"
-	@echo "  make clean-venv   	  - Supprime l'environnement venv"
-	@echo "  make clean-all    	  - Supprime tout sauf le fichier requirements"
-	@echo "  make clean-all-req	  - Supprime tout y compris le fichier requirements"
-	@echo "  make update-dep   	  - update les dépendances"
+	@echo "  make setup           - Configure le projet (venv, install, freeze)"
+	@echo "  make venv            - Crée l'environnement virtuel"
+	@echo "  make install         - Installe les dépendances std et usr"
+	@echo "  make install-freeze  - Installe les dépendances depuis requirements.txt"
+	@echo "  make run-dev         - Lance l'application en mode développement"
+	@echo "  make run-prod        - Lance l'application en mode production"
+	@echo "  make freeze          - Met à jour requirements.txt"
+	@echo "  make test            - Lance les tests"
+	@echo "  make clean           - Supprime les fichiers temporaires"
+	@echo "  make clean-logs      - Vide les logs"
+	@echo "  make clean-all       - Supprime fichiers temporaires et logs"

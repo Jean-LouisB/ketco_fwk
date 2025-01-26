@@ -1,5 +1,4 @@
 Flask
-Flask-Mail
 gunicorn
 mysqlclient
 python-dotenv

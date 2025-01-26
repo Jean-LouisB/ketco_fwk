@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KetCo FWK Documentation</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="../static/css/styles.css">
     <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </head>
 <body>
@@ -55,32 +56,51 @@
                 <li><strong>requirements.txt :</strong> Contient le freeze du projet.</li>
             </ul>
             <p>Pour ajouter vos dépendances personnelles :</p>
-            <pre><code>pip install &lt;ma_librairie&gt;  
-make freeze</code></pre>
+            <pre><code>
+    pip install &lt;ma_librairie&gt;  
+    make freeze
+        </code></pre>
         </section>
-
         <section id="makefile">
             <h2>🛠️ Makefile</h2>
             <p>Voici l'ensemble des commandes disponibles :</p>
             <ul>
-                <li><code>make setup</code> - Lance les commandes venv, install et freeze.</li>
-                <li><code>make venv</code> - Crée l'environnement virtuel.</li>
-                <li><code>make install</code> - Installe les dépendances std & usr v: latest</li>
-                <li><code>make install-freeze</code> - Installe les dépendances depuis le freeze</li>
+                <h3>Instalation : </h3>
+                <li><code>make venv</code> - Crée l'environnement virtuel Python.</li>
+                <li><code>make install</code> - Installe les dépendances standards et utilisateur.</li>
+                <li><code>make install-freeze</code> - Installe les dépendances depuis le fichier <code>requirements.txt</code>.</li>
+                <h3>Runs : </h3>
                 <li><code>make run-dev</code> - Lance l'application en mode développement.</li>
-                <li><code>make run-prod</code> - Lance l'application en mode production.</li>
-                <li><code>make freeze</code> - Met à jour <code>requirements.txt</code>.</li>
-                <li><code>make test</code> - Lance les tests.</li>
-                <li><code>make clean</code> - Supprime les fichiers temporaires.</li>
-                <li><code>make clean-logs</code> - Vide les logs.</li>
+                <li><code>make run-prod</code> - Lance l'application en mode production avec Gunicorn.</li>
+                <h3>Dépendances : </h3>
+                <li><code>make freeze</code> - Met à jour le fichier <code>requirements.txt</code> avec les dépendances actuelles.</li>
+                <h3>Tests : </h3>
+                <li><code>make test</code> - Exécute les tests avec <code>pytest</code>.</li>
+                <h3>Nettoyage : </h3>
+                <li><code>make clean</code> - Supprime les fichiers temporaires (caches, fichiers compilés, etc.).</li>
+                <li><code>make clean-logs</code> - Vide les logs dans le dossier <code>logs_gunicorn</code>.</li>
                 <li><code>make clean-venv</code> - Supprime l'environnement virtuel.</li>
-                <li><code>make clean-all</code> - Supprime tout sauf le fichier requirements.</li>
-                <li><code>make clean-all-req</code> - Supprime tout y compris le fichier requirements.</li>
-                <li><code>make update-dep</code> - Met à jour les dépendances.</li>
+                <li><code>make clean-all</code> - Supprime les fichiers temporaires, les logs et l'environnement virtuel.</li>
             </ul>
+            <h3>Utilisation recommandé : </h3>
+            <p>Pour réinitialiser le projet avec les dépendances initiales :</p>
+            <pre><code>
+    make clean-all
+    make install-freeze
+            </code></pre>
+            <p>Pour ajouter une dépendance et la freezer :</p>
+            <pre><code>
+    pip install &lt;ma_librairie&gt;  
+    make freeze
+            </code></pre>
+            <p>Pour exécuter l’application en développement ou en production :</p>
+            <pre><code>
+    make run-dev
+    make run-prod
+            </code></pre>  
         </section>
         <section>
-            <h2>Lancer l'app :</h2>
+            <h2>▶️ Lancer l'app :</h2>
             <p>Une fois tout installé le framwork est prêt à démarrer.</p>
             <p>faites :</p>
             <pre><code>make run-dev</code></pre>
@@ -89,9 +109,46 @@ make freeze</code></pre>
             <p>Une page doc.html est disponible à l'adresse <pre><code>http://localhost:3000/doc</code></pre></p>
             <p>Vous pouvez la modifier ou en creer d'autres</p>
         </section>
-        <section>
-            <h2>Créer des routes (et des blueprint)</h2>
-            <p>coming soon...</p>
+        <section id="routes">
+            <h2>🌐 Créer des routes (et des blueprints)</h2>
+            <p>Pour organiser vos routes dans le projet KetCo FWK, utilisez le système de <strong>blueprints</strong> fourni par Flask. Voici un guide rapide pour ajouter une nouvelle route :</p>
+            
+            <h3>Étape 1 : Créer un fichier pour votre blueprint</h3>
+            <p>Dans le dossier <code>src/routes/</code>, créez un fichier, par exemple : <code>example_routes.py</code>.</p>
+            <pre><code>
+        from flask import Blueprint, jsonify
+        
+        example = Blueprint('example', __name__)
+        
+        @example.route('/example', methods=['GET'])
+        def example_route():
+            return jsonify({"message": "Ceci est un exemple de route!"})
+            </code></pre>
+        
+            <h3>Étape 2 : Enregistrer le blueprint</h3>
+            <p>Dans le fichier <code>app.py</code>, enregistrez votre blueprint :</p>
+            <pre><code>
+        from flask import Flask
+        from src.routes.example_routes import example
+        
+        app = Flask(__name__)
+        
+        # Enregistrement du blueprint
+        app.register_blueprint(example, url_prefix='/api')
+            </code></pre>
+        
+            <p>Cette configuration rend la route accessible via : <code>http://localhost:3000/api/example</code>.</p>
+            
+            <h3>Étape 3 : Ajouter des routes supplémentaires</h3>
+            <p>Pour ajouter plus de routes dans le même fichier, répétez la méthode en utilisant <code>@example.route</code> avec les chemins et méthodes nécessaires.</p>
+        
+            <h3>Conseils</h3>
+            <ul>
+                <li>Utilisez des blueprints pour regrouper des routes ayant des finalités similaires (par exemple, routes liées aux utilisateurs, aux produits, etc.).</li>
+                <li>Privilégiez des noms explicites pour vos blueprints et vos fichiers pour une meilleure lisibilité.</li>
+                <li>Évitez de tout mettre dans <code>app.py</code> pour garder le projet modulaire et maintenable.</li>
+            </ul>
+        </section>
 
         </section>
         <section>
